@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+//         $this->call(EggSeeder::class);
+
         Role::firstOrCreate(['name' => Role::ROOT_ADMIN]);
 
         $plugins = Plugin::query()->orderBy('load_order')->get();
