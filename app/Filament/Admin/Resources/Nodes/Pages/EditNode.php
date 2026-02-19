@@ -458,7 +458,7 @@ class EditNode extends EditRecord
                                 ])
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->suffix('%'),
                         ]),
                     Grid::make()
@@ -519,7 +519,7 @@ class EditNode extends EditRecord
                                 ->required()
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->suffix('%'),
                         ]),
                     Grid::make()
@@ -539,29 +539,29 @@ class EditNode extends EditRecord
                                     0 => trans('admin/node.limited'),
                                 ])
                                 ->colors([
-                                    1 => 'primary',
-                                    0 => 'warning',
-                                ])
-                                ->columnSpan(2),
-                            TextInput::make('cpu')
-                                ->dehydratedWhenHidden()
-                                ->hidden(fn (Get $get) => $get('unlimited_cpu'))
-                                ->label(trans('admin/node.cpu_limit'))->inlineLabel()
-                                ->suffix('%')
-                                ->required()
-                                ->columnSpan(2)
-                                ->numeric()
-                                ->minValue(0),
-                            TextInput::make('cpu_overallocate')
-                                ->dehydratedWhenHidden()
-                                ->hidden(fn (Get $get) => $get('unlimited_cpu'))
-                                ->label(trans('admin/node.overallocate'))->inlineLabel()
-                                ->columnSpan(2)
-                                ->required()
-                                ->numeric()
-                                ->minValue(-1)
-                                ->maxValue(100)
-                                ->suffix('%'),
+                                     1 => 'primary',
+                                     0 => 'warning',
+                                ])->columnSpan(2),
+                                                              TextInput::make('cpu')
+                                                                  ->dehydratedWhenHidden()
+                                                                  ->hidden(fn (Get $get) => $get('unlimited_cpu'))
+                                                                  ->label(trans('admin/node.cpu_limit'))->inlineLabel()
+                                                                  ->suffix('%')
+                                                                  ->required()
+                                                                  ->columnSpan(2)
+                                                                  ->numeric()
+                                                                  ->minValue(0),
+                                                              TextInput::make('cpu_overallocate')
+                                                                  ->dehydratedWhenHidden()
+                                                                  ->hidden(fn (Get $get) => $get('unlimited_cpu'))
+                                                                  ->label(trans('admin/node.overallocate'))->inlineLabel()
+                                                                  ->columnSpan(2)
+                                                                  ->required()
+                                                                  ->numeric()
+                                                                  ->minValue(-1)
+                                                                  ->maxValue(1000)
+                                                                  ->suffix('%'),
+
                         ]),
                 ]),
             Tab::make('config_file')

@@ -38,6 +38,8 @@ else
   echo "APP_INSTALLED=false" >> /pelican-data/.env
 fi
 
+sed -i "s/memory_limit = 128M/memory_limit = 512M/" /usr/local/etc/php/php.ini-production
+
 # create directories for volumes
 mkdir -p /pelican-data/database /pelican-data/storage/avatars /pelican-data/storage/fonts /pelican-data/storage/icons /pelican-data/plugins /var/www/html/storage/logs/supervisord 2>/dev/null
 
@@ -63,6 +65,9 @@ fi
 
 echo "Optimizing Filament"
 php artisan filament:optimize
+
+echo -e "Optimizing everything"
+php artisan optimize
 
 # default to caddy not starting
 export SUPERVISORD_CADDY=false

@@ -335,7 +335,7 @@ class CreateNode extends CreateRecord
                                 ->columnSpan(2)
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->default(0)
                                 ->suffix('%')
                                 ->required(),
@@ -377,7 +377,7 @@ class CreateNode extends CreateRecord
                                 ->columnSpan(2)
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->default(0)
                                 ->suffix('%')
                                 ->required(),
@@ -420,9 +420,11 @@ class CreateNode extends CreateRecord
                                 ->numeric()
                                 ->default(0)
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->suffix('%')
                                 ->required(),
+
+
                         ]),
                 ]),
         ];
