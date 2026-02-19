@@ -458,7 +458,7 @@ class EditNode extends EditRecord
                                 ])
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->suffix('%'),
                         ]),
                     Grid::make()
@@ -519,7 +519,7 @@ class EditNode extends EditRecord
                                 ->required()
                                 ->numeric()
                                 ->minValue(-1)
-                                ->maxValue(100)
+                                ->maxValue(1000)
                                 ->suffix('%'),
                         ]),
                     Grid::make()
@@ -539,172 +539,29 @@ class EditNode extends EditRecord
                                     0 => trans('admin/node.limited'),
                                 ])
                                 ->colors([
-                                    1 => 'danger',
-                                    0 => 'success',
-                                ]),
-                            Grid::make()
-                                ->columns([
-                                    'default' => 1,
-                                    'sm' => 1,
-                                    'md' => 3,
-                                    'lg' => 6,
-                                ])
-                                ->columnSpanFull()
-                                ->schema([
-                                    ToggleButtons::make('unlimited_mem')
-                                        ->dehydrated()
-                                        ->label(trans('admin/node.memory'))->inlineLabel()->inline()
-                                        ->afterStateUpdated(fn (Set $set) => $set('memory', 0))
-                                        ->afterStateUpdated(fn (Set $set) => $set('memory_overallocate', 0))
-                                        ->formatStateUsing(fn (Get $get) => $get('memory') == 0)
-                                        ->live()
-                                        ->stateCast(new BooleanStateCast(false, true))
-                                        ->options([
-                                            1 => trans('admin/node.unlimited'),
-                                            0 => trans('admin/node.limited'),
-                                        ])
-                                        ->colors([
-                                            1 => 'primary',
-                                            0 => 'warning',
-                                        ])
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ]),
-                                    TextInput::make('memory')
-                                        ->dehydratedWhenHidden()
-                                        ->hidden(fn (Get $get) => $get('unlimited_mem'))
-                                        ->label(trans('admin/node.memory_limit'))->inlineLabel()
-                                        ->suffix(config('panel.use_binary_prefix') ? 'MiB' : 'MB')
-                                        ->required()
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ])
-                                        ->numeric()
-                                        ->minValue(0),
-                                    TextInput::make('memory_overallocate')
-                                        ->dehydratedWhenHidden()
-                                        ->label(trans('admin/node.overallocate'))->inlineLabel()
-                                        ->required()
-                                        ->hidden(fn (Get $get) => $get('unlimited_mem'))
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ])
-                                        ->numeric()
-                                        ->minValue(-1)
-                                        ->maxValue(1000)
-                                        ->suffix('%'),
-                                ]),
-                            Grid::make()
-                                ->columnSpanFull()
-                                ->columns([
-                                    'default' => 1,
-                                    'sm' => 1,
-                                    'md' => 3,
-                                    'lg' => 6,
-                                ])
-                                ->schema([
-                                    ToggleButtons::make('unlimited_disk')
-                                        ->dehydrated()
-                                        ->label(trans('admin/node.disk'))->inlineLabel()->inline()
-                                        ->live()
-                                        ->afterStateUpdated(fn (Set $set) => $set('disk', 0))
-                                        ->afterStateUpdated(fn (Set $set) => $set('disk_overallocate', 0))
-                                        ->formatStateUsing(fn (Get $get) => $get('disk') == 0)
-                                        ->stateCast(new BooleanStateCast(false, true))
-                                        ->options([
-                                            1 => trans('admin/node.unlimited'),
-                                            0 => trans('admin/node.limited'),
-                                        ])
-                                        ->colors([
-                                            1 => 'primary',
-                                            0 => 'warning',
-                                        ])
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ]),
-                                    TextInput::make('disk')
-                                        ->dehydratedWhenHidden()
-                                        ->hidden(fn (Get $get) => $get('unlimited_disk'))
-                                        ->label(trans('admin/node.disk_limit'))->inlineLabel()
-                                        ->suffix(config('panel.use_binary_prefix') ? 'MiB' : 'MB')
-                                        ->required()
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ])
-                                        ->numeric()
-                                        ->minValue(0),
-                                    TextInput::make('disk_overallocate')
-                                        ->dehydratedWhenHidden()
-                                        ->hidden(fn (Get $get) => $get('unlimited_disk'))
-                                        ->label(trans('admin/node.overallocate'))->inlineLabel()
-                                        ->columnSpan([
-                                            'default' => 1,
-                                            'sm' => 1,
-                                            'md' => 1,
-                                            'lg' => 2,
-                                        ])
-                                        ->required()
-                                        ->numeric()
-                                        ->minValue(-1)
-                                        ->maxValue(1000)
-                                        ->suffix('%'),
-                                ]),
-                            Grid::make()
-                                ->columns(6)
-                                ->columnSpanFull()
-                                ->schema([
-                                    ToggleButtons::make('unlimited_cpu')
-                                        ->dehydrated()
-                                        ->label(trans('admin/node.cpu'))->inlineLabel()->inline()
-                                        ->live()
-                                        ->afterStateUpdated(fn (Set $set) => $set('cpu', 0))
-                                        ->afterStateUpdated(fn (Set $set) => $set('cpu_overallocate', 0))
-                                        ->formatStateUsing(fn (Get $get) => $get('cpu') == 0)
-                                        ->stateCast(new BooleanStateCast(false, true))
-                                        ->options([
-                                            1 => trans('admin/node.unlimited'),
-                                            0 => trans('admin/node.limited'),
-                                        ])
-                                        ->colors([
-                                            1 => 'primary',
-                                            0 => 'warning',
-                                        ])
-                                        ->columnSpan(2),
-                                    TextInput::make('cpu')
-                                        ->dehydratedWhenHidden()
-                                        ->hidden(fn (Get $get) => $get('unlimited_cpu'))
-                                        ->label(trans('admin/node.cpu_limit'))->inlineLabel()
-                                        ->suffix('%')
-                                        ->required()
-                                        ->columnSpan(2)
-                                        ->numeric()
-                                        ->minValue(0),
-                                    TextInput::make('cpu_overallocate')
-                                        ->dehydratedWhenHidden()
-                                        ->hidden(fn (Get $get) => $get('unlimited_cpu'))
-                                        ->label(trans('admin/node.overallocate'))->inlineLabel()
-                                        ->columnSpan(2)
-                                        ->required()
-                                        ->numeric()
-                                        ->minValue(-1)
-                                        ->maxValue(1000)
-                                        ->suffix('%'),
-                                ]),
+                                     1 => 'primary',
+                                     0 => 'warning',
+                                ])->columnSpan(2),
+                                                              TextInput::make('cpu')
+                                                                  ->dehydratedWhenHidden()
+                                                                  ->hidden(fn (Get $get) => $get('unlimited_cpu'))
+                                                                  ->label(trans('admin/node.cpu_limit'))->inlineLabel()
+                                                                  ->suffix('%')
+                                                                  ->required()
+                                                                  ->columnSpan(2)
+                                                                  ->numeric()
+                                                                  ->minValue(0),
+                                                              TextInput::make('cpu_overallocate')
+                                                                  ->dehydratedWhenHidden()
+                                                                  ->hidden(fn (Get $get) => $get('unlimited_cpu'))
+                                                                  ->label(trans('admin/node.overallocate'))->inlineLabel()
+                                                                  ->columnSpan(2)
+                                                                  ->required()
+                                                                  ->numeric()
+                                                                  ->minValue(-1)
+                                                                  ->maxValue(1000)
+                                                                  ->suffix('%'),
+
                         ]),
                 ]),
             Tab::make('config_file')
